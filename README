@@ -1,0 +1,20 @@
+GC Analog Input
+
+ This serves as a simple data capture routine from a
+ 1.0 V serial output of HP 5890 Series II gas chromatograph.
+
+ The circuit:
+ * 1 V analog input into A0
+ * Two Off-(On) buttons are connected to Digital input 7 (start)
+ * and 8 (stop)
+ * One side of each button is attached to +5V 
+ * The other side of each button is in parallel with digital input
+ * and a 1K ohm pull-down resistor hooked to ground
+ * An LED is hooked up to Digital output 2 in series 
+ * with a 470 ohm resistor
+
+ Based upon Analog Input Example Created by David Cuartielles
+ modified 30 Aug 2011
+ By Tom Igoe
+
+ GCTry2 code written by T. Andrew Mobey, 21 Jan 2016
