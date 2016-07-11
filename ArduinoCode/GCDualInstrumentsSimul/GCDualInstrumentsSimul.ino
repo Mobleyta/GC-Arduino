@@ -1,39 +1,39 @@
 /*
-  GC Analog Input
+ GC Analog Input
+ 
  This serves as a simple data capture routine from a
  1.0 V serial output of HP 5890 Series II gas chromatograph.
 
- Current Version: Implements interrupt for stop button.
+ Current Version: Complete with two channels, multiple runs, 
 
  The circuit:
- See Frizzing diagram for description of circuit.  
+ See Frizzing diagram for description of circuit.  GCAnalogInputCircuitADS2ChanFinal.fzz
 
  Uses Adafruit breakout of ADS1115 Texas Instruments 16-Bit ADC
 
- Two different analog signals from GCs can be accommodated, but not simultaneously 
+ Two different analog signals from GCs can be accommodated simultaneously 
 
  Each signal has a separate Start/Stop Button
   Signal 1
     A0 input on ADS1115
     Start button on IO pin 9
-    Stop button on IO pin 8
-    Greed LED on IO pin 10
+    Stop button on IO pin 3
+    Greed LED on IO pin 6
    Signal 2
     A1 input on ADS1115
-    Start button on IO pin 3
+    Start button on IO pin 8
     Stop button on IO pin 2
-    Greed LED on IO pin 4 
+    Greed LED on IO pin 5 
 
  Based upon Analog Input Example Created by David Cuartielles
  modified 30 Aug 2011
  By Tom Igoe
 
- GCDualInstruments code written by T. Andrew Mobey, 7 Jun 2016
- based upon GCTry5 code
+ GCDualInstrumentsSimul code written by T. Andrew Mobey, 9 Jul 2016
+ based upon GCDualInsruments code
 
  Known Issues:
-  1) If one Channel is still collecting data, second channel can be restarted even if mode is not multiple.
-
+  
  */
 #include <Wire.h>
 #include <Adafruit_ADS1015.h>
