@@ -3,7 +3,7 @@
  False,
  False,
  True,
- None,
+ 'GCArduino.icns',
  None,
  False,
  False,
@@ -55,7 +55,7 @@
  [],
  False,
  False,
- 1468314487,
+ 1468402055,
  [('runw',
    '/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/PyInstaller/bootloader/Darwin-64bit/runw',
    'EXECUTABLE')])
