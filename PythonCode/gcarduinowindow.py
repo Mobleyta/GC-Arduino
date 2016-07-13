@@ -397,16 +397,9 @@ class dataNotebook():
             a.plot(xArray, yBaseArray, color=gcaGlobals.baselineColor)
         a.plot(xArray, yArray, color=gcaGlobals.traceColor)
 
-        for peak, color in zip(gc.peaks, colorlist):
-            try:
-                baseline = gc.baselineCalc
-            except:
-                try:
-                    peak.baselineCalc = gc.baseline
-                    baseline = gc.baselineCalc
-                except:
-                    baseline = 0
+        baseline = gc.baselineCalc
 
+        for peak, color in zip(gc.peaks, colorlist):
             a.fill_between(xArray, yArray, baseline, facecolor=color,
                            where=(xArray > xArray[peak.peakStart - 1]) &
                            (xArray < xArray[peak.peakEnd + 1]))
@@ -1129,6 +1122,14 @@ class fileMenu():
                     dataset.instrName = ""
             except AttributeError:
                 dataset.instrName = ""
+            try:
+                if dataset.baselineCalc != []:
+                    pass
+                else:
+                    dataset.baselineCalc = 0
+            except:
+                dataset.baselineCalc = 0
+                
             return dataset
 
         mw = gcaGlobals.mainwind

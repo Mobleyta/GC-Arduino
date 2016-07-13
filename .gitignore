@@ -4,5 +4,7 @@ literature/
 literature/*
 */OldCode
 */OldCode/*
-PythonCode/dist/*
+PythonCode/build
 PythonCode/build/*
+PythonCode/dist
+PythonCode/dist/*
