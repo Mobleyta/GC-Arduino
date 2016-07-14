@@ -12,10 +12,15 @@ Grinnell, IA 50112
 mobleyt@grinnell.edu
 """
 
-import gcarduinoserial as gcaSerial
-import gcarduinowindow as gca
-import gcardglobals as gcaGlobals
+import sys
 
+try:
+    import gcarduinoserial as gcaSerial
+    import gcarduinowindow as gca
+    import gcardglobals as gcaGlobals
+except:
+    print("Error Importing Configuration")
+    sys.exit()
 
 gcaGlobals.ard = gcaSerial.GCArduinoSerial()
 
