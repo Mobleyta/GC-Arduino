@@ -1,6 +1,6 @@
-GC-Arduino Project
+GasChromino Project
 
-The GC Arduino Program is an interface program that allows a PC/Mac/Linux system
+The GasChromino Program is an interface program that allows a PC/Mac/Linux system
 to communicate with an Arduino that is connected to one or more gas chromatography
 instruments.
 
@@ -45,19 +45,19 @@ GC Analog Input on Arduino
  modified 30 Aug 2011
  By Tom Igoe
 
- GCDualInstrumentsSimul code written by T. Andrew Mobey, 9 Jul 2016
+ GCDualInstrumentsSimul code written by T. Andrew Mobley, 9 Jul 2016
  based upon GCDualInsruments code
 
 Serial Input from Arduino
 
-  Program: ./PythonCode/GCReaderTK.py
+  Program: ./PythonCode/GasChromino.py
   Run using python3
   
   This program serves as the master program linking multiple modules implementing various
   aspects of the program. Starting it loads a TK window that controls all program
   functions.
   
-  A global variables file ./PythonCode/gcardglobals.py allows modification of the default
+  A global variables file ./PythonCode/gcaglobals.py allows modification of the default
   settings of the program.
   
 Circuitry Diagrams and Parts List
