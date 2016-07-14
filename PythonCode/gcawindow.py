@@ -22,7 +22,7 @@ import matplotlib.animation as animation
 import tkinter as tk
 from tkinter import ttk
 import gcafileio as gcafio
-import gcardglobals as gcaGlobals
+import gcaglobals as gcaGlobals
 from livegctrace import LiveGCTrace
 import time
 import sys
@@ -47,7 +47,7 @@ def startMainLoop(wind):
 
 
 def resetArduino():
-    """Function to call routine in gcarduinoserial to:
+    """Function to call routine in gcaserial to:
         reset Arduino by closing and reopening the connection.
     """
     if gcaGlobals.arduinoFile != "Not Connected":
@@ -56,7 +56,7 @@ def resetArduino():
 
 
 def closeArduino():
-    """Function to call routine in gcarduinoserial to:
+    """Function to call routine in gcaserial to:
         Close serial connection to Arduino
     """
     if gcaGlobals.arduinoFile != "Not Connected":
@@ -64,7 +64,7 @@ def closeArduino():
 
 
 def connectToArduino():
-    """Function to call routine in gcarduinoserial to:
+    """Function to call routine in gcaserial to:
         Open serial connection to Arduino
     Also calls funciton to start communication queues
     """
@@ -124,7 +124,7 @@ class gcArduinoWindow():
             this should probably be done by having multiple instances of the
             gcArduinoWindow, but in all likelihood this will mean that
             quite a bit needs to be refactored in the main controls
-            (gcarduinoserial).
+            (gcaserial).
         2) Currently the numerical data for two channels is not displayed
         3) Need the ability to sort data
         4) Better if save was done by marking tabs of notebook (rather than
@@ -650,7 +650,7 @@ threshhold")
         Procedure to look for the beginning of data from the arduino.
 
         Upon start button being pushed (or being invoked from the end of a
-        previous experiment at the end of queueExperiment in gcarduinoserial),
+        previous experiment at the end of queueExperiment in gcaserial),
         this procedure checks the setup of the experiment, getting the time
         of the experiment and the current comment, and then sends the
         parameters to the arduino.

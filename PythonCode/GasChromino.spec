@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['GCArduino.py'],
+a = Analysis(['GasChromino.py'],
              pathex=['/Users/mobleyt/Documents/School My Documents/ProgrammingProjects/GC-interface/PythonCode'],
              binaries=None,
              datas=None,
@@ -19,19 +19,19 @@ pyz = PYZ(a.pure, a.zipped_data,
 exe = EXE(pyz,
           a.scripts,
           exclude_binaries=True,
-          name='GCArduino',
+          name='GasChromino',
           debug=False,
           strip=False,
           upx=True,
-          console=False , icon='GCArduino.icns')
+          console=False , icon='GasChromino.icns')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
                a.datas,
                strip=False,
                upx=True,
-               name='GCArduino')
+               name='GasChromino')
 app = BUNDLE(coll,
-             name='GCArduino.app',
-             icon='GCArduino.icns',
+             name='GasChromino.app',
+             icon='GasChromino.icns',
              bundle_identifier=None)

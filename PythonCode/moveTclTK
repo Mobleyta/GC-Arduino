@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp /System/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GCArduino
-cp /System/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GCArduino.app/Contents/MacOS
-cp /System/Library/Frameworks/Tk.framework/Versions/8.5/Tk /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GCArduino
-cp /System/Library/Frameworks/Tk.framework/Versions/8.5/Tk /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GCArduino.app/Contents/MacOS
+cp /System/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GasChromino
+cp /System/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GasChromino.app/Contents/MacOS
+cp /System/Library/Frameworks/Tk.framework/Versions/8.5/Tk /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GasChromino
+cp /System/Library/Frameworks/Tk.framework/Versions/8.5/Tk /Users/mobleyt/Documents/School\ My\ Documents/ProgrammingProjects/GC-interface/PythonCode/dist/GasChromino.app/Contents/MacOS

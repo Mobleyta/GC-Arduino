@@ -13,7 +13,7 @@ Grinnell College
 Grinnell, IA 50112
 mobleyt@grinnell.edu
 """
-import gcardglobals as gcaGlobals
+import gcaglobals as gcaGlobals
 import gaschromatogram as gc
 import sys
 import threading

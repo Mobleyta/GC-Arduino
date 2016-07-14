@@ -24,7 +24,7 @@ Known Issue:
     Need to think about backwards compatibility in opening and saving files
     to allow for future modifications of this class.
     Partially handled currently in fixBkwdCompat() of openFile() in
-    gcarduinowindow.py
+    gcawindow.py
 
 Future Development:
     If other GC Instruments are added, this could be a root Class that other
@@ -42,7 +42,7 @@ mobleyt@grinnell.edu
 """
 
 import numpy as np
-import gcardglobals as gcaGlobals
+import gcaglobals as gcaGlobals
 
 
 class GasChromatogram():

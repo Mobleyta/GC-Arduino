@@ -15,9 +15,9 @@ mobleyt@grinnell.edu
 import sys
 
 try:
-    import gcarduinoserial as gcaSerial
-    import gcarduinowindow as gca
-    import gcardglobals as gcaGlobals
+    import gcaserial as gcaSerial
+    import gcawindow as gca
+    import gcaglobals as gcaGlobals
 except:
     print("Error Importing Configuration")
     sys.exit()
