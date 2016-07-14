@@ -8,3 +8,5 @@ PythonCode/build
 PythonCode/build/*
 PythonCode/dist
 PythonCode/dist/*
+Archive/*
+Archive
