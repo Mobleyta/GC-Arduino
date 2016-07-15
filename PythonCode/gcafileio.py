@@ -25,20 +25,22 @@ def openFile():
     native .gcard datatype. Maybe should extend to be able to open simple csv
     files of time, intensity.
     """
-    filename = filedialog.askopenfilename()
+    if gcaGlobals.workingDir == "":
+        gcaGlobals.workingDir = gcaGlobals.gasChrominoHome
+    filename = filedialog.askopenfilename(initialdir=gcaGlobals.workingDir)
     waste, ext = os.path.splitext(filename)
-    waste, shortfilename = os.path.split(filename)
-    if ext != ".gcard":
+    gcaGlobals.workingDir, shortfilename = os.path.split(filename)
+    if filename != "" and ext != ".gcard":
         messagebox.showinfo("Invalid filetype", "This program can currently \
 only open the gcard file type (native to this program).")
         return None
-    else:
+    elif filename != "":
         with open(filename, 'rb') as inputf:
             try:
                 return pickle.load(inputf), filename, shortfilename
             except:
                 messagebox.showinfo("File open error", "Trouble reading file")
-                return None
+                return None, None, None
 
 
 def saveFile(gcExp, extension=".gcard"):

@@ -2,11 +2,19 @@
 
 block_cipher = None
 
-
+added_files = [
+			 ('../Instructions.pdf', '.'),
+			 ('../README', '.'),
+			 ('../LICENSE.md', '.'),
+			 ('../ArduinoCode','ArduinoCode'),
+			 ('../Circuitry','Circuitry'),
+			 ('../Example Data Sets', 'Example Data Sets'),
+			 ('GasChromino.cfg','.')
+			 ]
 a = Analysis(['GasChromino.py'],
-             pathex=['/Users/mobleyt/Documents/School My Documents/ProgrammingProjects/GC-interface/PythonCode'],
+			 pathex=['~/Documents/School\ My\ Documents/ProgrammingProjects/GC-Interface/PythonCode'],
              binaries=None,
-             datas=None,
+             datas=added_files,
              hiddenimports=[],
              hookspath=['hooks-pyinstaller'],
              runtime_hooks=['hooks-pyinstaller/pyi_rth__tkinter.py'],

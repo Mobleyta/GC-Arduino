@@ -14,6 +14,8 @@ mobleyt@grinnell.edu
 """
 import sys
 import configparser
+from os.path import expanduser
+from os.path import expandvars
 
 def getPortDict():
     import serial_ports
@@ -25,23 +27,37 @@ def getPortDict():
 config = configparser.ConfigParser()
 config.optionxform=str
 
-try:
-    config.read('GasChromino.cfg')
-except:
-    print("Error opening config file")
-    raise Exception
-
-for key in config['globalVars']:
-    strToExec = str(key) + "=" + str(config['globalVars'][key])
-    exec(str(strToExec))
-
 if sys.platform.startswith('win'):
     platform = 'win'
+    print("Still need to assign GasChrominoHome")
 elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     platform = 'linux'
+    gasChrominoHome = expanduser("~") + \
+                      "$GasChrominoHome"
 elif sys.platform.startswith('darwin'):
     platform = 'mac'
+    gasChrominoHome = expandvars("$GASCHROMINOHOME")
+    if gasChrominoHome == "$GASCHROMINOHOME":    
+        gasChrominoHome = expanduser("~") + \
+                              "/Documents/GasChrominoData"
+    gasChrominoSupport = expandvars("$GASCHROMINOSUPPORT")
+    if gasChrominoSupport == "$GASCHROMINOSUPPORT":
+        gasChrominoSupport = expanduser("~") + \
+                          "/Library/Application Support/GasChromino"
+    else:
+        pass
 else:
     raise EnvironmentError('Unsupported platform')
 
+if platform == 'mac':
+    try:
+        config.read(gasChrominoSupport + "/GasChromino.cfg")
+    except:
+        print("Error opening config file")
+
+    for key in config['globalVars']:
+        strToExec = str(key) + "=" + str(config['globalVars'][key])
+        exec(str(strToExec))
+
 portDict = getPortDict()
+helpfile = gasChrominoSupport + '/' + helpfile

@@ -1134,41 +1134,45 @@ class fileMenu():
 
         mw = gcaGlobals.mainwind
 
-        newData, fn, sfn = gcafio.openFile()
-        if newData is not None:
-            existList = []
-            for data in mw.dataList:
-                existList.append(data.filename)
-            for indivNewData in newData:
-                newFilename = indivNewData.filename
-                if newFilename in existList:
-                    msg = "File "+newFilename+" already exists.  \n\n Do you \
+        try:
+            newData, fn, sfn = gcafio.openFile()
+        except TypeError:
+            pass
+        else:    
+            if newData is not None:
+                existList = []
+                for data in mw.dataList:
+                    existList.append(data.filename)
+                for indivNewData in newData:
+                    newFilename = indivNewData.filename
+                    if newFilename in existList:
+                        msg = "File "+newFilename+" already exists.  \n\n Do you \
 want to reopen the data (this will overwrite the existing data)?"
-                    if tk.messagebox.askokcancel("File Exists", msg):
-                        frameNo = existList.index(newFilename) + \
-                            gcaGlobals.noChannels
+                        if tk.messagebox.askokcancel("File Exists", msg):
+                            frameNo = existList.index(newFilename) + \
+                                gcaGlobals.noChannels
+                        else:
+                            frameNo = 999        # user cancelled, don't open file
                     else:
-                        frameNo = 999        # user cancelled, don't open file
-                else:
-                    frameNo = -1        # no files match, append to end of list
-                if frameNo == -1:
-                    indivNewData = fixBkwdCompat(indivNewData)
-                    mw.dataList.append(indivNewData)
-                    mw.dataNB.addDataFrame(indivNewData.tabTitle)
-                    mw.dataNB.datanb.select(len(mw.dataList)+1)
-                    mw.root.update_idletasks()
-                elif frameNo != 999:
-                    mw.dataList.append(indivNewData)
-                    mw.dataNB.addDataFrame(indivNewData.tabTitle,
-                                           frameNo,
-                                           frameNo-gcaGlobals.noChannels+1)
-                    mw.dataNB.datanb.select(frameNo)
-                    mw.root.update_idletasks()
-                elif frameNo == 999:
-                    pass                    # Did not open file
-        else:
-            mw.sendMessage("File Open Failed", "Some sort of error occurred.\n\
-\nThe file was not opened.")
+                        frameNo = -1        # no files match, append to end of list
+                    if frameNo == -1:
+                        indivNewData = fixBkwdCompat(indivNewData)
+                        mw.dataList.append(indivNewData)
+                        mw.dataNB.addDataFrame(indivNewData.tabTitle)
+                        mw.dataNB.datanb.select(len(mw.dataList)+1)
+                        mw.root.update_idletasks()
+                    elif frameNo != 999:
+                        mw.dataList.append(indivNewData)
+                        mw.dataNB.addDataFrame(indivNewData.tabTitle,
+                                               frameNo,
+                                               frameNo-gcaGlobals.noChannels+1)
+                        mw.dataNB.datanb.select(frameNo)
+                        mw.root.update_idletasks()
+                    elif frameNo == 999:
+                        pass                    # Did not open file
+            else:
+                mw.sendMessage("File Open Failed", "Some sort of error occurred.\n\
+    \nThe file was not opened.")
 
 
 class ardConnectMenu():
@@ -1291,5 +1295,5 @@ class helpMenu():
         elif gcaGlobals.platform == 'linux':
             subprocess.call(["xdg-open", gcaGlobals.helpfile])
         elif gcaGlobals.platform == 'mac':
-            cmd = 'open ' + gcaGlobals.helpfile
+            cmd = 'open ' + '\"' + gcaGlobals.helpfile + '\"'
             os.system(cmd)
