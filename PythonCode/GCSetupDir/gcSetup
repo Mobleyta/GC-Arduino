@@ -1,0 +1,225 @@
+#! /bin/bash
+
+gcapp="/Applications/GasChromino.app"
+continstall=n
+
+printf "\nInstalling GasChromino\n\n"
+
+if [ -d "$gcapp" ]
+then
+	printf "It appears that GasChromino has already been installed.\n\t"
+	continstall="z"
+	while [ $continstall != "y" ] && [ $continstall != "n" ]
+	do
+		read -p "Do you want to reinstall GasChromino (y/n)? " -n 1 continstall
+		printf "\n"
+	done
+	printf "\n\n"
+fi
+
+printf "GasChromino is typically installed in the main Applications directory.\n"
+printf "In this way it is available to all users who log into the computer.\n"
+read -p "Hit return to accept the default location, or type in a new location: " gcapp
+[ -z "${gcapp}" ] && gcapp="/Applications/GasChromino.app"
+printf "\n\n"
+	
+printf "GasChromino can be set up with either personalized data directories\n"
+printf "for each user, or it can be setup up with a global data directory\n"
+printf "for all users.\n"
+choose="z"
+while [ $choose != "p" ] && [ $choose != "g" ]
+do
+	read -p "Do you want personalized or global data directories (p/g/q)? " -n 1 choose
+	printf "\n"
+	if [ $choose = "q" ]
+	then
+		exit 1
+	fi
+done
+	
+if [ $choose = "g" ]
+then
+	if [ -n "$GASCHROMINOHOME" ]
+	then
+		printf "From a previous installation, GASCHROMINOHOME is already set to:\n\t$GASCHROMINOHOME\n"
+		choose="z"
+		while [ $choose != "c" ] && [ $choose != "g" ]
+		do
+			read -p "Noting that you want to install in a global location, do you want the current or global location (c/g/q)? " -n 1 choose
+			printf "\n"
+			if [ $choose = "q" ]
+			then
+				exit 1
+			fi	
+		done
+		printf "\n\n"
+		if [ $choose = "c" ]
+		then
+			gchome="$GASCHROMINOHOME"
+		else
+			printf "The default location for GASCHROMINOHOME is:\n\t /Users/Shared/Documents/GasChrominoData\n"
+			read -p "Hit return to accept the default location, or type in a new location: " gchome
+			[ -z "${gchome}" ] && gchome="/Users/Shared/Documents/GasChrominoData"
+			printf "\n\n"
+		fi
+	else
+		printf "The default location for GASCHROMINOHOME is:\n\t /Users/Shared/Documents/GasChrominoData\n"
+		read -p "Hit return to accept the default location, or type in a new location: " gchome
+		[ -z "${gchome}" ] && gchome="/Users/Shared/Documents/GasChrominoData"
+		printf "\n\n"
+	fi
+	
+	if [ -n "$GASCHROMINOSUPPORT" ]
+	then
+		printf "From a previous installation, GASCHROMINOSUPPORT is already set to:\n\t$GASCHROMINOSUPPORT\n"
+		choose="z"
+		while [ $choose != "c" ] && [ $choose != "g" ]
+		do
+			read -p "Noting that you want to install in a global location, do you want to keep the current value (c/g/q)? " -n 1 choose
+			printf "\n"
+			if [ $choose = "q" ]
+			then
+				exit 1
+			fi
+		done
+		printf "\n\n"
+		if [ $choose = "c" ]
+		then
+			gcsupport="$GASCHROMINOSUPPORT"
+		else
+			printf "The default for GASCHROMINOSUPPORT is:\n\t /Library/Application Support/GasChromino\n"
+			read -p "Hit return to accept the default location, or type in a new location: " gcsupport
+			[ -z "${gcsupport}" ] && gcsupport="/Library/Application Support/GasChromino"
+			printf "\n\n"
+		fi
+	else
+		printf "The default location for GASCHROMINOSUPPORT is:\n\t /Library/Application Support/GasChromino\n"
+		read -p "Hit return to accept the default location, or type in a new location: " gcsupport
+		printf "\n\n"
+		[ -z "${gcsupport}" ] && gcsupport="/Library/Application Support/GasChromino"
+	fi
+	
+elif [ $choose = "p" ]
+then
+	if [ -n "$GASCHROMINOHOME" ]
+	then
+		printf "GASCHROMINOHOME is currently set to:\n\t $GASCHROMINOHOME\n"
+		printf "The default location is:\n\t $HOME/Documents/GasChrominoData\n"
+		choose="z"
+		while [ $choose != "c" ] && [ $choose != "n" ]
+		do
+			read -p "Noting that you want to install in a personalized location, do you want to keep the current value (c/n)? " -n 1 choose
+			printf "\n"
+			if [ $choose = "q" ]
+			then
+				exit 1
+			fi
+		done
+		printf "\n\n"
+		if [ $choose = "c" ]
+		then
+			gchome="$GASCHROMINOHOME"
+		else
+			read -p "Hit return to accept the default location, or type in a new location: " gchome
+			[ -z "${gchome}" ] && gchome="$HOME/Documents/GasChrominoData"
+			printf "\n\n"
+		fi
+	else
+		printf "The default location is:\n\t $HOME/Documents/GasChrominoData\n"
+		read -p "Hit return to accept the default location, or type in a new location: " gchome
+		[ -z "${gchome}" ] && gchome="$HOME/Documents/GasChrominoData"
+		printf "\n\n"
+	fi
+
+	if [ -n "$GASCHROMINOSUPPORT" ]
+	then
+		printf "GASCHROMINOSUPPORT is set to:\n\t $GASCHROMINOSUPPORT\n"
+		printf "The default location is:\n\t $HOME/Library/Application Support/GasChromino\n"
+		choose="z"
+		while [ $choose != "c" ] && [ $choose != "n" ]
+		do
+			read -p "Noting that you want to install in a personalized location, do you want to keep the current value (c/n)? " -n 1 choose
+			printf "\n"
+			if [ $choose = "q" ]
+			then
+				exit 1
+			fi
+		done
+		printf "\n\n"
+		if [ $choose = "c" ]
+		then
+			gcsupport="$GASCHROMINOSUPPORT"
+		else
+			printf "The default location is:\n\t $HOME/Library/Application Support/GasChromino\n\t"
+			read -p "Hit return to accept the default location, or type in a new location: " gcsupport
+			[ -z "${gcsupport}" ] && gcsupport="$HOME/Library/Application Support/GasChromino"
+			printf "\n\n"
+		fi
+	else
+		read -p "Hit return to accept the default location, or type in a new location: " gcsupport
+		printf "\n\n"
+		[ -z "${gcsupport}" ] && gcsupport="$HOME/Library/Application Support/GasChromino"
+	fi
+
+fi
+
+printf "1. Copying GasChromino to Applications\n\n"
+cp -r GasChromino.app/ $gcapp
+
+resources="$gcapp/Contents/Resources"
+
+if [ -d "$gchome" ]
+then
+	printf "$gchome exists\n"
+else
+	printf "$gchome does not exist . . . making\n"
+	mkdir -p "$gchome"
+fi
+
+if [ -d "$gcsupport" ]
+then
+	printf "$gcsupport exists\n"
+else
+	printf "$gcsupport does not exist . . . making\n"
+	printf "This needs sudo privileges, please enter Password below.\n"
+	sudo mkdir -p "$gcsupport"
+fi
+
+if [ -d "$gchome/Example Data Sets" ]
+then
+	printf "$gchome/Example Data Sets directory exists\n"
+else
+	printf "$gchome/Example Data Sets directory does not exist . . . making\n"
+	mkdir "$gchome/Example Data Sets"
+fi
+
+printf "\n2. Copying Instructions and Default Config file to $gcsupport\n"
+printf "This needs sudo privileges, please enter Password below.\n"
+sudo cp "$resources/GasChromino.cfg" "$gcsupport/GasChromino.cfg"
+sudo cp "$resources/Instructions.pdf" "$gcsupport/Instructions.pdf"
+
+printf "3. Copying Example Data\n"
+cp -r "$resources/Example Data Sets" "$gchome"
+	
+printf "4. Modifying $HOME/.bash_profile\n"
+if [ ! -f "$HOME/.bash_profile" ]
+then
+	touch "$HOME/.bash_profile"
+fi
+
+sed -i bak '/GasChromino/d' $HOME/.bash_profile
+echo "# These lines added by setup for GasChromino" >> $HOME/.bash_profile
+echo "export GASCHROMINOHOME=\"$gchome\"" >> $HOME/.bash_profile
+echo "export GASCHROMINOSUPPORT=\"$gcsupport\"" >> $HOME/.bash_profile
+	
+sed 's:GCDataHolder:'"$gchome"':' $resources/Info | \
+	sed 's:GCSupportHolder:'"$gcsupport"':' > tempInfo
+mv tempInfo $gcapp/Contents/Info.plist
+	
+printf "\n\n"
+printf "5. Set environment variable GASCHROMINOHOME to $gchome\n"
+printf "6. Set environment variable GASCHROMINOSUPPORT to $gcsupport\n\n"
+
+source $HOME/.bash_profile
+
+

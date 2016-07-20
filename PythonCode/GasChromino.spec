@@ -9,7 +9,9 @@ added_files = [
 			 ('../ArduinoCode','ArduinoCode'),
 			 ('../Circuitry','Circuitry'),
 			 ('../Example Data Sets', 'Example Data Sets'),
-			 ('GasChromino.cfg','.')
+			 ('GasChromino.cfg','.'),
+			 ('GCSetupDir/gcSetup','.'),
+			 ('GCSetupDir/Info','.')
 			 ]
 a = Analysis(['GasChromino.py'],
 			 pathex=['~/Documents/School\ My\ Documents/ProgrammingProjects/GC-Interface/PythonCode'],

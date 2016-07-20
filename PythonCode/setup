@@ -1,0 +1,42 @@
+#!/bin/bash
+
+echo "Running pyinstaller"
+pyinstaller GasChromino.spec
+
+echo "Copying Tcl and TK binaries"
+./moveTclTK
+
+cp dist/GasChromino.app/Contents/Resources/Info dist/Info
+cp dist/GasChromino.app/Contents/Resources/gcSetup dist/gcSetup
+
+#echo "Copying Instructions and Config file to correct location"
+
+#if [ -d "$GASCHROMINOHOME" ]
+#then
+#	echo "$GASCHROMINOHOME exists"
+#else
+#	echo "$GASCHROMINOHOME does not exist . . . making"
+#	mkdir "$GASCHROMINOHOME"
+#fi
+
+#if [ -d "$GASCHROMINOSUPPORT" ]
+#then
+#	echo "$GASCHROMINOSUPPORT exists"
+#else
+#	echo "$GASCHROMINOSUPPORT does not exist . . . making"
+#	mkdir "$GASCHROMINOSUPPORT"
+#fi
+
+#cp GasChromino.cfg "$GASCHROMINOSUPPORT/GasChromino.cfg"
+#cp ../Instructions.pdf "$GASCHROMINOSUPPORT/Instructions.pdf"
+
+#if [ -d "$GASCHROMINOHOME/Example Data Sets" ]
+#then
+#	echo "$GASCHROMINOHOME/Example Data Sets directory exists"
+#else
+#	echo "$GASCHROMINOHOME/Example Data Sets directory does not exist . . . making"
+#	mkdir "$GASCHROMINOHOME/Example Data Sets"
+#fi
+
+#cp -r "../Example Data Sets" "$GASCHROMINOHOME"
+

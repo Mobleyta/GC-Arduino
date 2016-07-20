@@ -16,6 +16,7 @@ import sys
 import configparser
 from os.path import expanduser
 from os.path import expandvars
+import os
 
 def getPortDict():
     import serial_ports
@@ -23,7 +24,7 @@ def getPortDict():
     portList = serial_ports.serial_ports()
     portDict = dict(zip(range(len(portList)), portList))
     return portDict
-    
+  
 config = configparser.ConfigParser()
 config.optionxform=str
 
@@ -37,15 +38,17 @@ elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
 elif sys.platform.startswith('darwin'):
     platform = 'mac'
     gasChrominoHome = expandvars("$GASCHROMINOHOME")
-    if gasChrominoHome == "$GASCHROMINOHOME":    
-        gasChrominoHome = expanduser("~") + \
-                              "/Documents/GasChrominoData"
+    print("Home is "+gasChrominoHome)
+#    if gasChrominoHome == "$GASCHROMINOHOME":    
+#        gasChrominoHome = expanduser("~") + \
+#                              "/Documents/GasChrominoData"
     gasChrominoSupport = expandvars("$GASCHROMINOSUPPORT")
-    if gasChrominoSupport == "$GASCHROMINOSUPPORT":
-        gasChrominoSupport = expanduser("~") + \
-                          "/Library/Application Support/GasChromino"
-    else:
-        pass
+    print("Support is "+gasChrominoSupport)
+#    if gasChrominoSupport == "$GASCHROMINOSUPPORT":
+#        gasChrominoSupport = expanduser("~") + \
+#                          "/Library/Application Support/GasChromino"
+#    else:
+#        pass	
 else:
     raise EnvironmentError('Unsupported platform')
 

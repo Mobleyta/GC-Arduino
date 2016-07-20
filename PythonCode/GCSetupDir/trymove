@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo mkdir /Library/Application\ Support/GasChromino
+sudo cp Info /Library/Application\ Support/GasChromino/Info

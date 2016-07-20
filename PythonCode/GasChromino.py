@@ -17,11 +17,20 @@ import sys
 
 import gcaserial as gcaSerial
 import gcawindow as gca
+
+import os
+with open("/Users/mobleyt/Desktop/outfile", "w") as outfile:
+    outfile.write(str(os.environ.keys()))
+    
 import gcaglobals as gcaGlobals
+
+
 
 gcaGlobals.ard = gcaSerial.GCArduinoSerial()
 
 gcaGlobals.mainwind = gca.gcArduinoWindow()
+
+
 
 if not gcaGlobals.dataStation:
     gcaGlobals.mainwind.root.after(10, gca.connectToArduino)
