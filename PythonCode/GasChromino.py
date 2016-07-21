@@ -12,28 +12,38 @@ Grinnell, IA 50112
 mobleyt@grinnell.edu
 """
 
-import sys
-
-
-import gcaserial as gcaSerial
-import gcawindow as gca
-
-import os
-with open("/Users/mobleyt/Desktop/outfile", "w") as outfile:
-    outfile.write(str(os.environ.keys()))
-    
 import gcaglobals as gcaGlobals
 
+if gcaGlobals.noGlobals:
+    import tkinter as tk
+    import sys
+    
+    def getout():
+        root.destroy()
+        root.quit()
+        
+    root = tk.Tk()
+    root.title("Error opening Global Variables")
+    msg = "There was an unresolved error opening the \
+Global Variables.\n\n This is most likely due to improper setup.\n Please try \
+running gcSetup and try again."
+    tk.Label(root, text=msg, fg='red').pack()
+    tk.Button(root, text="Quit", command=getout).pack()
+    root.lift()
+    
+    root.mainloop()
+else:
+    import gcaserial as gcaSerial
+    import gcawindow as gca    
+
+    gcaGlobals.ard = gcaSerial.GCArduinoSerial()
+
+    gcaGlobals.mainwind = gca.gcArduinoWindow()
 
 
-gcaGlobals.ard = gcaSerial.GCArduinoSerial()
 
-gcaGlobals.mainwind = gca.gcArduinoWindow()
+    if not gcaGlobals.dataStation:
+        gcaGlobals.mainwind.root.after(10, gca.connectToArduino)
+        gcaGlobals.mainwind.root.after(50, gca.selectLiveTab)
 
-
-
-if not gcaGlobals.dataStation:
-    gcaGlobals.mainwind.root.after(10, gca.connectToArduino)
-    gcaGlobals.mainwind.root.after(50, gca.selectLiveTab)
-
-gca.startMainLoop(gcaGlobals.mainwind)
+    gca.startMainLoop(gcaGlobals.mainwind)

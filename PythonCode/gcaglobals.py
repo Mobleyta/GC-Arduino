@@ -17,6 +17,9 @@ import configparser
 from os.path import expanduser
 from os.path import expandvars
 import os
+import datetime
+import shutil
+import subprocess
 
 def getPortDict():
     import serial_ports
@@ -24,10 +27,33 @@ def getPortDict():
     portList = serial_ports.serial_ports()
     portDict = dict(zip(range(len(portList)), portList))
     return portDict
-  
-config = configparser.ConfigParser()
-config.optionxform=str
 
+def writeLogFile(message):
+    import datetime
+    
+    msgtime = datetime.datetime.strftime(datetime.datetime.now(),
+                                         '%Y-%m-%d %H:%M:%S')
+    with open("/Users/mobleyt/Desktop/outfile", "a") as logfile:
+        logfile.write(msgtime + ":  ")        
+        for line in message:
+            logfile.write(line)
+        logfile.write("\n")
+            
+writeLogFile(["\n\nLogfile start"])
+writeLogFile(["Starting GasChromino"])
+
+
+if getattr(sys, 'frozen', False):
+        # we are running in a bundle
+        execDir = sys._MEIPASS
+        frozen = True
+        writeLogFile(["Path to executable: ", execDir])
+else:
+        # we are running in a normal Python environment
+        execDir = os.path.dirname(os.path.abspath(__file__))
+        frozen = False
+        writeLogFile(["Path to executable: ", execDir])
+        
 if sys.platform.startswith('win'):
     platform = 'win'
     print("Still need to assign GasChrominoHome")
@@ -37,30 +63,71 @@ elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
                       "$GasChrominoHome"
 elif sys.platform.startswith('darwin'):
     platform = 'mac'
+    writeLogFile(["Platform = " + platform + "\n",
+                  "Importing Global Variables"])
+
     gasChrominoHome = expandvars("$GASCHROMINOHOME")
-    print("Home is "+gasChrominoHome)
-#    if gasChrominoHome == "$GASCHROMINOHOME":    
-#        gasChrominoHome = expanduser("~") + \
-#                              "/Documents/GasChrominoData"
+    if gasChrominoHome == "$GASCHROMINOHOME":    
+        writeLogFile(["Environment variable $GASCHROMINOHOME not set\n"])        
+        gasChrominoHome = expanduser("~") + \
+                              "/Documents/GasChrominoData"
+
+    if len(gasChrominoHome.split('/')[0]) > 0:
+        if gasChrominoHome.split('/')[0][0] == "$":
+            gchtemp = gasChrominoHome.split('/')
+            gchtemp[0] = expandvars(gchtemp[0])
+            gasChrominoHome = "/".join(gchtemp)
+    writeLogFile(["Environment variable $GASCHROMINOHOME set to " + 
+                 gasChrominoHome])
+
     gasChrominoSupport = expandvars("$GASCHROMINOSUPPORT")
-    print("Support is "+gasChrominoSupport)
-#    if gasChrominoSupport == "$GASCHROMINOSUPPORT":
-#        gasChrominoSupport = expanduser("~") + \
-#                          "/Library/Application Support/GasChromino"
-#    else:
-#        pass	
+    if gasChrominoSupport == "$GASCHROMINOSUPPORT":
+        writeLogFile(["Environment variable $GASCHROMINOSUPPORT not set\n"])        
+        gasChrominoSupport = expanduser("~") + \
+                          "/Library/Application Support/GasChromino"
+    else:
+        pass
+    if len(gasChrominoSupport.split('/')[0]) > 0:
+        if gasChrominoSupport.split('/')[0][0] == "$":
+            gcstemp = gasChrominoSupport.split('/')
+            gcstemp[0] = expandvars(gcstemp[0])
+            gasChrominoSupport = "/".join(gcstemp)
+    writeLogFile(["Environment variable $GASCHROMINOSUPPORT set to " + 
+                 gasChrominoSupport])
+    
+    if not os.path.isfile(gasChrominoSupport + "/GasChromino1.cfg"):
+        if frozen:
+            writeLogFile(["Copying " + execDir +
+                         "/Resources/GasChromino.cfg to " +
+                         gasChrominoSupport + "/GasChromino.cfg"])
+            shutil.copy2(execDir + "/Resources/GasChromino.cfg",
+                         gasChrominoSupport + "/GasChromino.cfg")
+        else:
+            writeLogFile(["Copying " + execDir + "/GasChromino.cfg to " +
+                         gasChrominoSupport + "/GasChromino.cfg"])
+            shutil.copy2(execDir + "/GasChromino.cfg",
+                         gasChrominoSupport + "/GasChromino.cfg")
+        subprocess.run(['open', gasChrominoSupport + "/GasChromino.cfg"])
+        subprocess.run(['open', gasChrominoSupport + "/Instructions.pdf"])
 else:
+    writeLogFile('Unsupported platform')
     raise EnvironmentError('Unsupported platform')
+
+config = configparser.ConfigParser()
+config.optionxform=str
 
 if platform == 'mac':
     try:
         config.read(gasChrominoSupport + "/GasChromino.cfg")
+        for key in config['globalVars']:
+            strToExec = str(key) + "=" + str(config['globalVars'][key])
+            exec(str(strToExec))
+        noGlobals = False
     except:
-        print("Error opening config file")
+        writeLogFile("Error opening config file")
+        writeLogFile(str(sys.exc_info()))
+        noGlobals = True
 
-    for key in config['globalVars']:
-        strToExec = str(key) + "=" + str(config['globalVars'][key])
-        exec(str(strToExec))
-
-portDict = getPortDict()
-helpfile = gasChrominoSupport + '/' + helpfile
+if not noGlobals:
+    portDict = getPortDict()
+    helpfile = gasChrominoSupport + '/' + helpfile
