@@ -193,9 +193,8 @@ else
 	mkdir "$gchome/Example Data Sets"
 fi
 
-printf "\n2. Copying Instructions and Default Config file to $gcsupport\n"
+printf "\n2. Copying Instructions to $gcsupport\n"
 printf "This needs sudo privileges, please enter Password below.\n"
-sudo cp "$resources/GasChromino.cfg" "$gcsupport/GasChromino.cfg"
 sudo cp "$resources/Instructions.pdf" "$gcsupport/Instructions.pdf"
 
 printf "3. Copying Example Data\n"
