@@ -208,12 +208,6 @@ void getExperTime(){        // This routine retrieves the experimental time numb
     channel = Serial.readStringUntil(' ');
   }  
   if (channel == "1"){
-//    if (multString == "multiple"){
-//      multiple1 = true;
-//    }
-//    else{
-//      multiple1 = false; 
-//    }
     startString1 = startString;
     String inString="";
     int inChar=0;
@@ -239,12 +233,6 @@ void getExperTime(){        // This routine retrieves the experimental time numb
     }
   }
   else if (channel == "2"){
-//    if (multString == "multiple"){
-//      multiple2 = true;
-//    }
-//    else{
-//      multiple2 = false; 
-//    }
     startString2 = startString;
     String inString="";
     int inChar=0;
@@ -336,6 +324,7 @@ void checkTimeOver(){
   if (timeValue1>timeExper1){
     writeData1=false;
     stopped1=true;
+    timeExper1=0;
 //    timeValue1=0;
 //    sensorValue1=0;
     firsttime1=true;
@@ -344,6 +333,7 @@ void checkTimeOver(){
   if (timeValue2>timeExper2){
     writeData2=false;
     stopped2=true;
+    timeExper2=0;
 //    timeValue2=0;
 //    sensorValue2=0;
     firsttime2=true;

@@ -95,7 +95,7 @@ elif sys.platform.startswith('darwin'):
     writeLogFile(["Environment variable $GASCHROMINOSUPPORT set to " + 
                  gasChrominoSupport])
     
-    if not os.path.isfile(gasChrominoSupport + "/GasChromino1.cfg"):
+    if not os.path.isfile(gasChrominoSupport + "/GasChromino.cfg"):
         if frozen:
             writeLogFile(["Copying " + execDir +
                          "/Resources/GasChromino.cfg to " +
